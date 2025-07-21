@@ -5,16 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Edit Profile</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Top-right icons container */
+    .top-icons {
+      position: fixed;
+      top: 10px;
+      right: 15px;
+      display: flex;
+      gap: 12px;
+      font-size: 1.5em;
+      color: #555;
+      user-select: none;
+      z-index: 1000;
+    }
+    /* Icon hover effect */
+    .top-icons span:hover {
+      color: #000;
+      cursor: pointer;
+    }
+    /* Profile preview */
+    #profile-preview {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #111;
+      margin-bottom: 15px;
+      display: block;
+    }
+    /* Input label styling */
+    label[for="profile-pic"] {
+      display: inline-block;
+      margin-bottom: 10px;
+      cursor: pointer;
+      color: #000;
+      font-weight: 600;
+    }
+    /* Hide the actual file input */
+    #profile-pic {
+      display: none;
+    }
+  </style>
+  <!-- Using FontAwesome CDN for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
+  <div class="top-icons" aria-label="Menu icons">
+    <span title="Settings"><i class="fas fa-cog"></i></span>
+    <span title="Messages"><i class="fas fa-envelope"></i></span>
+    <span title="Notifications"><i class="fas fa-bell"></i></span>
+    <span title="Help"><i class="fas fa-question-circle"></i></span>
+  </div>
+
   <div class="dashboard">
     <h1>Edit Profile</h1>
+
+    <img id="profile-preview" src="lor_tinky.jpg" alt="Profile Preview" />
+
     <form class="edit-form">
       <label for="username-input">Username</label>
       <input id="username-input" type="text" placeholder="jamorant00" />
 
+      <label for="profile-pic">Change Profile Picture</label>
+      <input type="file" id="profile-pic" accept="image/*" />
+
       <button type="submit">Save Changes</button>
     </form>
+
     <br />
     <a href="index.html" class="button">← Back to Dashboard</a>
   </div>
@@ -22,14 +79,47 @@
   <script>
     const input = document.getElementById('username-input');
     const form = document.querySelector('.edit-form');
+    const profilePicInput = document.getElementById('profile-pic');
+    const profilePreview = document.getElementById('profile-preview');
 
-    const saved = localStorage.getItem('username');
-    if (saved) input.value = saved;
+    // Load saved username and profile pic on page load
+    const savedUsername = localStorage.getItem('username');
+    if (savedUsername) input.value = savedUsername;
+
+    const savedPic = localStorage.getItem('profilePic');
+    if (savedPic) {
+      profilePreview.src = savedPic;
+    }
+
+    // Update profile preview when user selects a new image
+    profilePicInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        profilePreview.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
 
     form.addEventListener('submit', e => {
       e.preventDefault();
-      localStorage.setItem('username', input.value.trim());
-      alert("Username saved!");
+      const usernameVal = input.value.trim();
+      if(usernameVal.length === 0) {
+        alert('Please enter a username');
+        return;
+      }
+      localStorage.setItem('username', usernameVal);
+
+      // Save the profile pic to localStorage (base64)
+      if (profilePreview.src.startsWith('data:image/')) {
+        localStorage.setItem('profilePic', profilePreview.src);
+      } else {
+        // If user didn't change the pic, save default
+        localStorage.setItem('profilePic', 'lor_tinky.jpg');
+      }
+      alert('Profile saved!');
     });
   </script>
 </body>
