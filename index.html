@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lor Tinky Dashboard</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#ffeb3b" />
+  <meta name="theme-color" content="#000000" />
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js');
@@ -15,42 +15,49 @@
 </head>
 <body>
   <div class="dashboard">
-    <header>
-      <img src="lor_tinky.jpg" alt="Lor Tinky" class="profile-img" />
-      <h1>Lor Tinky</h1>
-      <p class="username">@jamorant00</p>
-    </header>
-
-    <section class="stats-card">
-      <h2>📈 Artist Stats</h2>
-      <div class="stats">
-        <div><strong>Monthly Listeners</strong><br>12,942</div>
-        <div><strong>Total Streams</strong><br>88,392</div>
-        <div><strong>Top Song</strong><br>“Titi Mama Tata”</div>
+    <div class="profile">
+      <img src="lor_tinky.jpg" alt="Lor Tinky">
+      <div class="profile-info">
+        <h1>Lor Tinky</h1>
+        <p id="username-display">@jamorant00</p>
       </div>
-    </section>
+    </div>
 
-    <section class="chart">
-      <h3>Streams Over Time</h3>
-      <div class="bar-chart">
-        <div style="height: 40%"><span>Jan</span></div>
-        <div style="height: 60%"><span>Feb</span></div>
-        <div style="height: 80%"><span>Mar</span></div>
-        <div style="height: 55%"><span>Apr</span></div>
-        <div style="height: 90%"><span>May</span></div>
-        <div style="height: 75%"><span>Jun</span></div>
+    <div class="stats">
+      <div class="stat-card">
+        <h3>Streams</h3>
+        <p>9,872</p>
       </div>
-    </section>
+      <div class="stat-card">
+        <h3>Monthly Listeners</h3>
+        <p>1,205</p>
+      </div>
+      <div class="stat-card">
+        <h3>Earnings</h3>
+        <p>$146.27</p>
+      </div>
+      <div class="stat-card">
+        <h3>Followers</h3>
+        <p>304</p>
+      </div>
+    </div>
 
-    <section class="distro">
-      <h2>📦 Distribution</h2>
-      <p>Uploaded via DistroKid. Earnings tracked, streaming across Spotify, Apple Music, TikTok and more.</p>
-    </section>
+    <div class="graph">
+      <p>📈 Weekly streams graph coming soon!</p>
+    </div>
 
-    <footer>
-      <a href="edit.html">✏️ Edit Profile</a>
-      <a href="wrapped.html">🎉 Wrapped</a>
-    </footer>
+    <a href="edit.html" class="button">Edit Profile</a>
   </div>
+
+  <footer>
+    <a href="wrapped.html">View Wrapped →</a>
+  </footer>
+
+  <script>
+    const username = localStorage.getItem('username');
+    if (username) {
+      document.getElementById('username-display').textContent = '@' + username;
+    }
+  </script>
 </body>
 </html>
