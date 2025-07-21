@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Lor Tinky Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#000000">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#000000" />
+  <link rel="stylesheet" href="style.css">
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/sw.js');
@@ -15,33 +15,21 @@
 </head>
 <body>
   <div class="container">
-    <img id="profilePic" src="lor_tinky.jpg" alt="Lor Tinky Profile" class="pfp">
-    <h2 id="username">Lor Tinky</h2>
-    <p><span id="listenerCount">87,420</span> Monthly Listeners</p>
-
-    <h3>Songs</h3>
-    <ul>
-      <li>Titi Mama Tata</li>
-      <li>Like Tew Mump</li>
-      <li>Like Tew Mump (Radio Version)</li>
-    </ul>
-
+    <img id="profilePic" class="pfp" src="lor_tinky.jpg" alt="Lor Tinky">
+    <h1 id="username">Lor Tinky</h1>
+    <p id="listeners">0 Monthly Listeners</p>
     <a class="edit-link" href="edit.html">✏️ Edit Profile</a>
+    <a class="edit-link" href="wrapped.html">📊 Wrapped</a>
   </div>
 
   <script>
-    window.onload = function () {
-      const name = localStorage.getItem("username") || "Lor Tinky";
-      const pfp = localStorage.getItem("pfp");
-      const listeners = localStorage.getItem("listeners") || "87,420";
+    const name = localStorage.getItem("username");
+    const listeners = localStorage.getItem("listeners");
+    const pfp = localStorage.getItem("pfp");
 
-      document.getElementById("username").textContent = name;
-      document.getElementById("listenerCount").textContent = listeners;
-
-      if (pfp) {
-        document.getElementById("profilePic").src = pfp;
-      }
-    };
+    if (name) document.getElementById("username").textContent = name;
+    if (listeners) document.getElementById("listeners").textContent = `${listeners} Monthly Listeners`;
+    if (pfp) document.getElementById("profilePic").src = pfp;
   </script>
 </body>
 </html>
