@@ -4,30 +4,45 @@
   <meta charset="UTF-8" />
   <title>Lor Tinky Wrapped</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body class="wrapped">
-  <div class="wrapped-banner">
-    <img id="wrappedPfp" src="lor_tinky.jpg" alt="Profile">
-  </div>
+<body class="dark wrapped">
+  <div class="wrapped-banner"></div>
   <div class="container">
-    <h1 class="fade-in">📊 Lor Tinky Wrapped</h1>
-    <p class="stat fade-in"><strong>Total Streams:</strong> <span id="totalStreams">0</span></p>
-    <p class="stat fade-in"><strong>Top Song:</strong> <span id="topSong">Unknown</span></p>
-    <p class="stat fade-in"><strong>Monthly Growth:</strong> <span id="growth">0%</span></p>
-    <a class="edit-link fade-in" href="index.html">← Back to Dashboard</a>
+    <div class="slide active" id="slide1">
+      <h1>📊 Total Streams</h1>
+      <p id="wrapStreams">0</p>
+    </div>
+    <div class="slide" id="slide2">
+      <h1>🔥 Top Song</h1>
+      <p id="wrapTop">Unknown</p>
+    </div>
+    <div class="slide" id="slide3">
+      <h1>📈 Growth</h1>
+      <p id="wrapGrowth">0%</p>
+    </div>
+    <button class="next-btn" onclick="nextSlide()">Next ➡️</button>
+    <a class="edit-link" href="index.html">← Home</a>
   </div>
 
   <script>
-    const streams = localStorage.getItem("streams") || "4,220";
-    const topSong = localStorage.getItem("topSong") || "Like Tew Mump";
-    const growth = localStorage.getItem("growth") || "+54%";
-    const pfp = localStorage.getItem("pfp");
+    const stats = {
+      streams: localStorage.getItem("streams") || "4220",
+      top: localStorage.getItem("topSong") || "Like Tew Mump",
+      growth: localStorage.getItem("growth") || "+54%",
+      pfp: localStorage.getItem("pfp")
+    };
+    document.getElementById("wrapStreams").textContent = stats.streams;
+    document.getElementById("wrapTop").textContent = stats.top;
+    document.getElementById("wrapGrowth").textContent = stats.growth;
 
-    document.getElementById("totalStreams").textContent = streams;
-    document.getElementById("topSong").textContent = topSong;
-    document.getElementById("growth").textContent = growth;
-    if (pfp) document.getElementById("wrappedPfp").src = pfp;
+    const slides = ["slide1","slide2","slide3"];
+    let idx = 0;
+    function nextSlide(){
+      document.getElementById(slides[idx]).classList.remove("active");
+      idx = (idx+1)%slides.length;
+      document.getElementById(slides[idx]).classList.add("active");
+    }
   </script>
 </body>
 </html>
