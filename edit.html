@@ -2,101 +2,190 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Edit Artist Info</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Lor Tinky Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    body {
-      background-color: #f9e000;
+    .edit-container {
+      max-width: 600px;
+      margin: 40px auto;
+      background: #ffa726;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      color: #000;
       font-family: 'Roboto', sans-serif;
-      padding: 20px;
+    }
+    .edit-container h2 {
+      text-align: center;
+      color: orange;
+      margin-bottom: 20px;
+      font-weight: 700;
     }
     label {
       display: block;
       margin-top: 12px;
-      font-weight: bold;
+      font-weight: 700;
+      color: #000;
     }
-    input,
-    textarea {
+    input[type="text"], input[type="url"], textarea {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
+      padding: 8px 12px;
+      margin-top: 6px;
+      border-radius: 6px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      font-size: 16px;
+      font-family: 'Roboto', sans-serif;
+      resize: vertical;
     }
-    button {
-      margin-top: 20px;
-      background-color: orange;
+    textarea {
+      min-height: 80px;
+    }
+    #profilePicPreview {
+      margin-top: 15px;
+      display: block;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid orange;
+    }
+    button.save-btn {
+      margin-top: 25px;
+      background: orange;
       color: white;
-      padding: 12px;
+      font-weight: 700;
       border: none;
-      border-radius: 5px;
-      font-weight: bold;
+      border-radius: 8px;
+      padding: 14px;
       width: 100%;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.3s ease;
+    }
+    button.save-btn:hover {
+      background: #ffb74d;
     }
   </style>
 </head>
 <body>
-  <h1>Edit Lor Tinky Profile</h1>
+  <div class="edit-container">
+    <h2>Edit Lor Tinky Profile</h2>
 
-  <label>Username</label>
-  <input type="text" id="username" />
+    <label for="usernameInput">Username</label>
+    <input type="text" id="usernameInput" placeholder="jamorant00" />
 
-  <label>Profile Bio</label>
-  <textarea id="bio" rows="4"></textarea>
+    <label for="profilePicInput">Profile Picture URL</label>
+    <input type="url" id="profilePicInput" placeholder="https://example.com/lor_tinky.jpg" />
+    <img id="profilePicPreview" alt="Profile Preview" src="" />
 
-  <label>Monthly Listeners</label>
-  <input type="number" id="listeners" />
+    <label for="bioInput">Bio</label>
+    <textarea id="bioInput" placeholder="Write the artist bio here..."></textarea>
 
-  <label>Followers</label>
-  <input type="number" id="followers" />
+    <label for="monthlyListenersInput">Monthly Listeners</label>
+    <input type="text" id="monthlyListenersInput" placeholder="e.g. 24,892" />
 
-  <label>Total Streams</label>
-  <input type="number" id="streams" />
+    <label for="totalStreamsInput">Total Streams</label>
+    <input type="text" id="totalStreamsInput" placeholder="e.g. 429,000" />
 
-  <label>Average Daily Streams</label>
-  <input type="number" id="daily" />
+    <label for="averageStreamsInput">Average Daily Streams</label>
+    <input type="text" id="averageStreamsInput" placeholder="e.g. 2,145" />
 
-  <label>Earnings</label>
-  <input type="number" id="earnings" />
+    <label for="listenerGrowthInput">Listener Growth (%)</label>
+    <input type="text" id="listenerGrowthInput" placeholder="e.g. +12.3%" />
 
-  <label>Monthly Income</label>
-  <input type="number" id="income" />
+    <label for="earningsInput">Earnings ($)</label>
+    <input type="text" id="earningsInput" placeholder="e.g. 923.45" />
 
-  <label>Top City</label>
-  <input type="text" id="topCity" />
+    <label for="monthlyIncomeInput">Monthly Income ($)</label>
+    <input type="text" id="monthlyIncomeInput" placeholder="e.g. 214.56" />
 
-  <label>Last 30 Days Revenue</label>
-  <input type="number" id="last30" />
+    <label for="followersInput">Followers</label>
+    <input type="text" id="followersInput" placeholder="e.g. 15,000" />
 
-  <button onclick="saveChanges()">Save Changes</button>
+    <button class="save-btn" id="saveBtn">Save Changes</button>
+  </div>
 
-  <nav class="nav-bar">
+  <nav class="nav-bar" style="max-width:700px; margin: 30px auto; justify-content:center;">
     <a href="index.html">Home</a>
     <a href="wrapped.html">Wrapped</a>
     <a href="edit.html" class="active">Edit</a>
   </nav>
 
   <script>
-    // On page load, fill inputs with saved values if any
-    window.onload = function () {
-      const fields = ['username', 'bio', 'listeners', 'followers', 'streams', 'daily', 'earnings', 'income', 'topCity', 'last30'];
-      fields.forEach(field => {
-        const saved = localStorage.getItem(field);
-        if (saved) {
-          document.getElementById(field).value = saved;
-        }
-      });
+    const defaults = {
+      username: "jamorant00",
+      profilePic: "lor_tinky.jpg",
+      bio: "Lor Tinky is a rising artist known for his vibrant beats and soulful lyrics. His music blends traditional rhythms with modern sounds to create a unique listening experience that resonates worldwide.",
+      monthlyListeners: "24,892",
+      totalStreams: "429,000",
+      averageStreams: "2,145",
+      listenerGrowth: "+12.3%",
+      earnings: "923.45",
+      monthlyIncome: "214.56",
+      followers: "15,000"
     };
 
-    function saveChanges() {
-      const fields = ['username', 'bio', 'listeners', 'followers', 'streams', 'daily', 'earnings', 'income', 'topCity', 'last30'];
-      fields.forEach(field => {
-        const value = document.getElementById(field).value;
-        localStorage.setItem(field, value);
-      });
-      alert('✅ Info updated and saved!');
+    // Elements
+    const usernameInput = document.getElementById('usernameInput');
+    const profilePicInput = document.getElementById('profilePicInput');
+    const profilePicPreview = document.getElementById('profilePicPreview');
+    const bioInput = document.getElementById('bioInput');
+    const monthlyListenersInput = document.getElementById('monthlyListenersInput');
+    const totalStreamsInput = document.getElementById('totalStreamsInput');
+    const averageStreamsInput = document.getElementById('averageStreamsInput');
+    const listenerGrowthInput = document.getElementById('listenerGrowthInput');
+    const earningsInput = document.getElementById('earningsInput');
+    const monthlyIncomeInput = document.getElementById('monthlyIncomeInput');
+    const followersInput = document.getElementById('followersInput');
+    const saveBtn = document.getElementById('saveBtn');
+
+    // Load saved data or defaults
+    function loadData() {
+      const saved = JSON.parse(localStorage.getItem('lorTinkyData')) || {};
+      usernameInput.value = saved.username || defaults.username;
+      profilePicInput.value = saved.profilePic || defaults.profilePic;
+      profilePicPreview.src = saved.profilePic || defaults.profilePic;
+      bioInput.value = saved.bio || defaults.bio;
+      monthlyListenersInput.value = saved.monthlyListeners || defaults.monthlyListeners;
+      totalStreamsInput.value = saved.totalStreams || defaults.totalStreams;
+      averageStreamsInput.value = saved.averageStreams || defaults.averageStreams;
+      listenerGrowthInput.value = saved.listenerGrowth || defaults.listenerGrowth;
+      earningsInput.value = saved.earnings || defaults.earnings;
+      monthlyIncomeInput.value = saved.monthlyIncome || defaults.monthlyIncome;
+      followersInput.value = saved.followers || defaults.followers;
     }
+
+    // Save data to localStorage
+    function saveData() {
+      const data = {
+        username: usernameInput.value.trim() || defaults.username,
+        profilePic: profilePicInput.value.trim() || defaults.profilePic,
+        bio: bioInput.value.trim() || defaults.bio,
+        monthlyListeners: monthlyListenersInput.value.trim() || defaults.monthlyListeners,
+        totalStreams: totalStreamsInput.value.trim() || defaults.totalStreams,
+        averageStreams: averageStreamsInput.value.trim() || defaults.averageStreams,
+        listenerGrowth: listenerGrowthInput.value.trim() || defaults.listenerGrowth,
+        earnings: earningsInput.value.trim() || defaults.earnings,
+        monthlyIncome: monthlyIncomeInput.value.trim() || defaults.monthlyIncome,
+        followers: followersInput.value.trim() || defaults.followers
+      };
+      localStorage.setItem('lorTinkyData', JSON.stringify(data));
+      alert('Changes saved!');
+    }
+
+    // Update profile pic live when URL input changes
+    profilePicInput.addEventListener('input', () => {
+      const url = profilePicInput.value.trim();
+      if (url) profilePicPreview.src = url;
+      else profilePicPreview.src = defaults.profilePic;
+    });
+
+    // On save button click
+    saveBtn.addEventListener('click', saveData);
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', loadData);
   </script>
 </body>
 </html>
