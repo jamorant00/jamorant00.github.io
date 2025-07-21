@@ -2,125 +2,101 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Edit Profile</title>
+  <title>Edit Artist Info</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Top-right icons container */
-    .top-icons {
-      position: fixed;
-      top: 10px;
-      right: 15px;
-      display: flex;
-      gap: 12px;
-      font-size: 1.5em;
-      color: #555;
-      user-select: none;
-      z-index: 1000;
+    body {
+      background-color: #f9e000;
+      font-family: 'Roboto', sans-serif;
+      padding: 20px;
     }
-    /* Icon hover effect */
-    .top-icons span:hover {
-      color: #000;
-      cursor: pointer;
-    }
-    /* Profile preview */
-    #profile-preview {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #111;
-      margin-bottom: 15px;
+    label {
       display: block;
+      margin-top: 12px;
+      font-weight: bold;
     }
-    /* Input label styling */
-    label[for="profile-pic"] {
-      display: inline-block;
-      margin-bottom: 10px;
-      cursor: pointer;
-      color: #000;
-      font-weight: 600;
+    input,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-    /* Hide the actual file input */
-    #profile-pic {
-      display: none;
+    button {
+      margin-top: 20px;
+      background-color: orange;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      width: 100%;
     }
   </style>
-  <!-- Using FontAwesome CDN for icons -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="top-icons" aria-label="Menu icons">
-    <span title="Settings"><i class="fas fa-cog"></i></span>
-    <span title="Messages"><i class="fas fa-envelope"></i></span>
-    <span title="Notifications"><i class="fas fa-bell"></i></span>
-    <span title="Help"><i class="fas fa-question-circle"></i></span>
-  </div>
+  <h1>Edit Lor Tinky Profile</h1>
 
-  <div class="dashboard">
-    <h1>Edit Profile</h1>
+  <label>Username</label>
+  <input type="text" id="username" />
 
-    <img id="profile-preview" src="lor_tinky.jpg" alt="Profile Preview" />
+  <label>Profile Bio</label>
+  <textarea id="bio" rows="4"></textarea>
 
-    <form class="edit-form">
-      <label for="username-input">Username</label>
-      <input id="username-input" type="text" placeholder="jamorant00" />
+  <label>Monthly Listeners</label>
+  <input type="number" id="listeners" />
 
-      <label for="profile-pic">Change Profile Picture</label>
-      <input type="file" id="profile-pic" accept="image/*" />
+  <label>Followers</label>
+  <input type="number" id="followers" />
 
-      <button type="submit">Save Changes</button>
-    </form>
+  <label>Total Streams</label>
+  <input type="number" id="streams" />
 
-    <br />
-    <a href="index.html" class="button">← Back to Dashboard</a>
-  </div>
+  <label>Average Daily Streams</label>
+  <input type="number" id="daily" />
+
+  <label>Earnings</label>
+  <input type="number" id="earnings" />
+
+  <label>Monthly Income</label>
+  <input type="number" id="income" />
+
+  <label>Top City</label>
+  <input type="text" id="topCity" />
+
+  <label>Last 30 Days Revenue</label>
+  <input type="number" id="last30" />
+
+  <button onclick="saveChanges()">Save Changes</button>
+
+  <nav class="nav-bar">
+    <a href="index.html">Home</a>
+    <a href="wrapped.html">Wrapped</a>
+    <a href="edit.html" class="active">Edit</a>
+  </nav>
 
   <script>
-    const input = document.getElementById('username-input');
-    const form = document.querySelector('.edit-form');
-    const profilePicInput = document.getElementById('profile-pic');
-    const profilePreview = document.getElementById('profile-preview');
+    // On page load, fill inputs with saved values if any
+    window.onload = function () {
+      const fields = ['username', 'bio', 'listeners', 'followers', 'streams', 'daily', 'earnings', 'income', 'topCity', 'last30'];
+      fields.forEach(field => {
+        const saved = localStorage.getItem(field);
+        if (saved) {
+          document.getElementById(field).value = saved;
+        }
+      });
+    };
 
-    // Load saved username and profile pic on page load
-    const savedUsername = localStorage.getItem('username');
-    if (savedUsername) input.value = savedUsername;
-
-    const savedPic = localStorage.getItem('profilePic');
-    if (savedPic) {
-      profilePreview.src = savedPic;
+    function saveChanges() {
+      const fields = ['username', 'bio', 'listeners', 'followers', 'streams', 'daily', 'earnings', 'income', 'topCity', 'last30'];
+      fields.forEach(field => {
+        const value = document.getElementById(field).value;
+        localStorage.setItem(field, value);
+      });
+      alert('✅ Info updated and saved!');
     }
-
-    // Update profile preview when user selects a new image
-    profilePicInput.addEventListener('change', e => {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(event) {
-        profilePreview.src = event.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const usernameVal = input.value.trim();
-      if(usernameVal.length === 0) {
-        alert('Please enter a username');
-        return;
-      }
-      localStorage.setItem('username', usernameVal);
-
-      // Save the profile pic to localStorage (base64)
-      if (profilePreview.src.startsWith('data:image/')) {
-        localStorage.setItem('profilePic', profilePreview.src);
-      } else {
-        // If user didn't change the pic, save default
-        localStorage.setItem('profilePic', 'lor_tinky.jpg');
-      }
-      alert('Profile saved!');
-    });
   </script>
 </body>
 </html>
