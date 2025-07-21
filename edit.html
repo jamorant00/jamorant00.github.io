@@ -3,24 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <title>Edit Profile & Stats</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="dark">
+<body class="home">
+  <div class="bg-squiggle"></div>
   <div class="container">
-    <h1>Edit</h1>
-    <input type="text" id="nameInput" placeholder="Username"/>
-    <input type="number" id="listenerInput" placeholder="Monthly Listeners"/>
-    <input type="file" id="pfpInput" accept="image/*"/>
+    <h1>Edit Profile</h1>
+    <input type="text" id="nameInput" placeholder="Username" />
+    <input type="number" id="listenerInput" placeholder="Monthly Listeners" />
+    <input type="file" id="pfpInput" accept="image/*" />
 
-    <hr/>
-    <h2>Stream Stats</h2>
-    <input type="text" id="topSongInput" placeholder="Top Song"/>
-    <input type="text" id="growthInput" placeholder="Growth %"/>
-    <input type="number" id="streamsInput" placeholder="Total Streams"/>
+    <hr />
+    <h2>Stats for Wrapped</h2>
+    <input type="text" id="topSongInput" placeholder="Top Song" />
+    <input type="text" id="growthInput" placeholder="Growth %" />
+    <input type="number" id="streamsInput" placeholder="Total Streams" />
 
-    <hr/>
-    <h2>Edit Chart Data</h2>
+    <hr />
+    <h2>Chart Data (CSV)</h2>
     <textarea id="chartInput" placeholder="e.g. 400,600,800"></textarea>
 
     <button onclick="saveAll()">Save Changes</button>
@@ -28,32 +29,36 @@
   </div>
 
   <script>
-    document.getElementById("nameInput").value = localStorage.getItem("username") || "";
-    document.getElementById("listenerInput").value = localStorage.getItem("listeners") || "";
-    document.getElementById("topSongInput").value = localStorage.getItem("topSong") || "";
-    document.getElementById("growthInput").value = localStorage.getItem("growth") || "";
-    document.getElementById("streamsInput").value = localStorage.getItem("streams") || "";
-    document.getElementById("chartInput").value = (JSON.parse(localStorage.getItem("chartData")) || []).join(",");
+    document.getElementById("nameInput").value = localStorage.getItem("username")||"";
+    document.getElementById("listenerInput").value = localStorage.getItem("listeners")||"";
+    document.getElementById("topSongInput").value = localStorage.getItem("topSong")||"";
+    document.getElementById("growthInput").value = localStorage.getItem("growth")||"";
+    document.getElementById("streamsInput").value = localStorage.getItem("streams")||"";
+    document.getElementById("chartInput").value = (JSON.parse(localStorage.getItem("chartData"))||[]).join(",");
 
-    function saveAll() {
-      const nv = document.getElementById("nameInput").value;
-      const li = document.getElementById("listenerInput").value;
-      const ts = document.getElementById("topSongInput").value;
-      const gr = document.getElementById("growthInput").value;
-      const st = document.getElementById("streamsInput").value;
-      const chText = document.getElementById("chartInput").value;
+    function saveAll(){
+      const nv=document.getElementById("nameInput").value;
+      const li=document.getElementById("listenerInput").value;
+      const ts=document.getElementById("topSongInput").value;
+      const gr=document.getElementById("growthInput").value;
+      const st=document.getElementById("streamsInput").value;
+      const chText=document.getElementById("chartInput").value;
+      const file=document.getElementById("pfpInput").files[0];
 
-      if(nv) localStorage.setItem("username", nv);
-      if(li) localStorage.setItem("listeners", li);
-      if(ts) localStorage.setItem("topSong", ts);
-      if(gr) localStorage.setItem("growth", gr);
-      if(st) localStorage.setItem("streams", st);
-
-      if(chText) {
-        const arr = chText.split(",").map(n=>parseInt(n.trim())).filter(n=>!isNaN(n));
-        localStorage.setItem("chartData", JSON.stringify(arr));
+      if(nv) localStorage.setItem("username",nv);
+      if(li) localStorage.setItem("listeners",li);
+      if(ts) localStorage.setItem("topSong",ts);
+      if(gr) localStorage.setItem("growth",gr);
+      if(st) localStorage.setItem("streams",st);
+      if(chText){
+        const arr=chText.split(",").map(n=>parseInt(n.trim())).filter(n=>!isNaN(n));
+        localStorage.setItem("chartData",JSON.stringify(arr));
       }
-      alert("✅ Saved!");
+      if(file){
+        const reader=new FileReader();
+        reader.onloadend=()=>{localStorage.setItem("pfp",reader.result);alert("Saved!");};
+        reader.readAsDataURL(file);
+      } else alert("Saved!");
     }
   </script>
 </body>
