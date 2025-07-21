@@ -4,32 +4,64 @@
   <meta charset="UTF-8" />
   <title>Lor Tinky Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#000000" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#000" />
+  <link rel="stylesheet" href="style.css" />
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js');
-    }
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
   </script>
 </head>
-<body>
+<body class="dark">
+  <div class="banner"></div>
   <div class="container">
-    <img id="profilePic" class="pfp" src="lor_tinky.jpg" alt="Lor Tinky">
+    <img id="profilePic" class="pfp" src="lor_tinky.jpg" alt="Profile">
     <h1 id="username">Lor Tinky</h1>
-    <p id="listeners">0 Monthly Listeners</p>
-    <a class="edit-link" href="edit.html">✏️ Edit Profile</a>
-    <a class="edit-link" href="wrapped.html">📊 Wrapped</a>
+    <p><span id="listeners">87,420</span> Monthly Listeners</p>
+
+    <h2>Monthly Streams</h2>
+    <div class="chart">
+      <div id="bars"></div>
+      <input type="number" id="monthInput" placeholder="Streams this month" />
+      <button onclick="addData()">Add Month</button>
+    </div>
+
+    <div class="nav-links">
+      <a href="edit.html">✏️ Edit Profile & Stats</a>
+      <a href="wrapped.html">📊 Wrapped</a>
+    </div>
   </div>
 
   <script>
+    // load profile
     const name = localStorage.getItem("username");
     const listeners = localStorage.getItem("listeners");
     const pfp = localStorage.getItem("pfp");
-
     if (name) document.getElementById("username").textContent = name;
-    if (listeners) document.getElementById("listeners").textContent = `${listeners} Monthly Listeners`;
+    if (listeners) document.getElementById("listeners").textContent = listeners;
     if (pfp) document.getElementById("profilePic").src = pfp;
+
+    // chart data
+    let data = JSON.parse(localStorage.getItem("chartData")) || [400,600,800,700,900];
+    function renderChart() {
+      const bars = document.getElementById("bars");
+      bars.innerHTML = "";
+      const max = Math.max(...data, 1);
+      data.forEach(n => {
+        const h = 100 * (n / max);
+        bars.innerHTML += `<div class="bar" style="height:${h}%;" title="${n}"></div>`;
+      });
+    }
+    function addData() {
+      const val = parseInt(document.getElementById("monthInput").value);
+      if (val > 0) {
+        data.push(val);
+        if (data.length > 12) data.shift();
+        localStorage.setItem("chartData", JSON.stringify(data));
+        renderChart();
+      }
+      document.getElementById("monthInput").value = "";
+    }
+    renderChart();
   </script>
 </body>
 </html>
