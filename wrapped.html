@@ -2,144 +2,191 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lor Tinky Wrapped</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    /* Wrapped page specific styles */
-    body {
-      background: #ffe600 url('https://i.imgur.com/oK5JvYH.png') repeat;
-      background-size: 120px;
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 20px;
-      color: #111;
-    }
+    /* Inline styles to complement style.css */
 
     .wrapped-container {
-      max-width: 460px;
+      max-width: 700px;
       margin: 0 auto;
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
       position: relative;
-      overflow: hidden;
+      background: #ffa726;
+      border-radius: 12px;
+      padding: 24px 32px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      min-height: 400px;
     }
 
     .slide {
       opacity: 0;
-      transition: opacity 0.6s ease;
       position: absolute;
-      width: 100%;
-      top: 20px;
-      left: 0;
-      padding: 0 20px;
-      box-sizing: border-box;
+      top: 24px;
+      left: 32px;
+      right: 32px;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      font-weight: 600;
+      font-size: 18px;
+      color: #000;
     }
-
     .slide.active {
       opacity: 1;
+      pointer-events: auto;
       position: relative;
     }
 
-    h2 {
-      font-size: 1.5em;
-      margin-bottom: 10px;
+    .slide h1, .slide h2 {
+      margin: 0 0 16px;
+      font-weight: 700;
+      color: orange;
     }
 
-    p {
-      font-size: 1.1em;
-      margin-bottom: 20px;
+    .stats-list {
+      margin-left: 20px;
+      margin-bottom: 30px;
+    }
+    .stats-list li {
+      margin-bottom: 8px;
     }
 
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
+    .nav-arrows {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      pointer-events: none;
     }
-
-    button {
-      background: #000;
-      color: #fff;
-      border: none;
-      padding: 10px 16px;
-      font-size: 1em;
-      border-radius: 8px;
+    .nav-arrow {
+      pointer-events: auto;
       cursor: pointer;
+      font-size: 32px;
+      font-weight: 700;
+      color: orange;
+      position: absolute;
+      top: 50%;
+      user-select: none;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      text-align: center;
+      line-height: 44px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+    .nav-arrow:hover {
+      background: orange;
+      color: #fff;
+    }
+    .nav-arrow.left {
+      left: -30px;
+    }
+    .nav-arrow.right {
+      right: -30px;
     }
 
-    button:disabled {
-      background: #555;
-      cursor: default;
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .wrapped-container {
+        padding: 20px 16px;
+        min-height: auto;
+      }
+      .nav-arrow.left {
+        left: 5px;
+      }
+      .nav-arrow.right {
+        right: 5px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="wrapped-container">
     <div class="slide active" id="slide1">
-      <h2>🎉 Lor Tinky's 2025 Wrapped</h2>
-      <p>Total Streams: 88,392</p>
-      <p>Monthly Listeners: 12,942</p>
-      <p>Followers: 3,405</p>
-    </div>
-    <div class="slide" id="slide2">
-      <h2>🔥 Top Track</h2>
-      <p>“Titi Mama Tata” — 25,341 streams</p>
-    </div>
-    <div class="slide" id="slide3">
-      <h2>🎧 Platforms</h2>
-      <p>Spotify, Apple Music, TikTok, YouTube, and more</p>
-    </div>
-    <div class="slide" id="slide4">
-      <h2>💰 Earnings</h2>
-      <p>Approx. $1,235.45 earned from streams</p>
+      <h1>Spotify Wrapped 2024</h1>
+      <h2>Top Songs</h2>
+      <ul class="stats-list">
+        <li><strong>1. Like Tew Mump</strong> – 215,000 streams</li>
+        <li><strong>2. Titi Mama Tata</strong> – 174,000 streams</li>
+        <li><strong>3. Like Tew Mump (Radio Version)</strong> – 31,000 streams</li>
+      </ul>
     </div>
 
-    <div class="controls">
-      <button id="prevBtn" disabled>←</button>
-      <button id="nextBtn">→</button>
+    <div class="slide" id="slide2">
+      <h2>Streaming Stats</h2>
+      <ul class="stats-list">
+        <li><strong>Monthly Listeners:</strong> 24,892</li>
+        <li><strong>Total Streams:</strong> 429,000</li>
+        <li><strong>Average Daily Streams:</strong> 2,145</li>
+        <li><strong>Listener Growth:</strong> +12.3%</li>
+      </ul>
+    </div>
+
+    <div class="slide" id="slide3">
+      <h2>Revenue & Audience</h2>
+      <ul class="stats-list">
+        <li><strong>Earnings:</strong> $923.45</li>
+        <li><strong>Monthly Income:</strong> $214.56</li>
+        <li><strong>Top City:</strong> Toronto, Canada</li>
+        <li><strong>Last 30 Days Revenue:</strong> $189.60</li>
+      </ul>
+    </div>
+
+    <div class="nav-arrows">
+      <div class="nav-arrow left" id="prevBtn" aria-label="Previous slide" role="button" tabindex="0">&#8592;</div>
+      <div class="nav-arrow right" id="nextBtn" aria-label="Next slide" role="button" tabindex="0">&#8594;</div>
     </div>
   </div>
 
+  <nav class="nav-bar" style="max-width:700px; margin: 30px auto; justify-content:center;">
+    <a href="index.html">Home</a>
+    <a href="wrapped.html" class="active">Wrapped</a>
+    <a href="edit.html">Edit</a>
+  </nav>
+
   <script>
-    const slides = document.querySelectorAll('.slide');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    let currentSlide = 0;
+    (() => {
+      const slides = document.querySelectorAll('.slide');
+      let current = 0;
 
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+      }
+
+      function nextSlide() {
+        current = (current + 1) % slides.length;
+        showSlide(current);
+      }
+
+      function prevSlide() {
+        current = (current - 1 + slides.length) % slides.length;
+        showSlide(current);
+      }
+
+      document.getElementById('nextBtn').addEventListener('click', nextSlide);
+      document.getElementById('prevBtn').addEventListener('click', prevSlide);
+
+      // Keyboard accessibility
+      document.getElementById('nextBtn').addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          nextSlide();
+        }
       });
-      prevBtn.disabled = index === 0;
-      nextBtn.disabled = index === slides.length -1;
-    }
+      document.getElementById('prevBtn').addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          prevSlide();
+        }
+      });
 
-    prevBtn.addEventListener('click', () => {
-      if (currentSlide > 0) {
-        currentSlide--;
-        showSlide(currentSlide);
-      }
-    });
-
-    nextBtn.addEventListener('click', () => {
-      if (currentSlide < slides.length -1) {
-        currentSlide++;
-        showSlide(currentSlide);
-      }
-    });
-
-    // Optional: Auto-advance every 8 seconds
-    // setInterval(() => {
-    //   if (currentSlide < slides.length -1) {
-    //     currentSlide++;
-    //   } else {
-    //     currentSlide = 0;
-    //   }
-    //   showSlide(currentSlide);
-    // }, 8000);
+      // Initialize first slide visible
+      showSlide(current);
+    })();
   </script>
 </body>
 </html>
