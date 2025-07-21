@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lor Tinky - Artist Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="profile">
+      <img src="lor_tinky.jpg" alt="Lor Tinky" class="profile-pic">
+      <h1>Lor Tinky</h1>
+    </div>
+
+    <div class="stats-row">
+      <div class="card"><h2>Streams (7 days)</h2><p>37,452</p><span class="up">▲ 6,423</span></div>
+      <div class="card"><h2>Monthly Listeners</h2><p>118,931</p><span class="up">▲ steady</span></div>
+      <div class="card"><h2>Streams/Listener</h2><p>0.31</p><span class="down">▼ 2%</span></div>
+    </div>
+
+    <div class="stats-row">
+      <div class="card"><h2>Followers</h2><p>12,104</p><span class="up">▲ 218</span></div>
+      <div class="card"><h2>Revenue (est.)</h2><p>$412.12</p><span class="up">▲ $32.16</span></div>
+      <div class="card"><h2>Saves</h2><p>2,870</p><span class="up">▲ 203</span></div>
+    </div>
+
+    <canvas id="streamChart" width="400" height="200"></canvas>
+
+    <h2>My Music</h2>
+    <table class="music-table">
+      <tr><th>Title</th><th>Platforms</th></tr>
+      <tr><td>TiTi MaMa TaTA</td><td>Spotify, Apple Music, YouTube</td></tr>
+    </table>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
