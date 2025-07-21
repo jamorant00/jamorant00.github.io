@@ -2,49 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Edit Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <title>Edit Profile & Stats</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
-<body>
+<body class="dark">
   <div class="container">
-    <h1>Edit Profile</h1>
-    <input type="text" id="nameInput" placeholder="Username" />
-    <input type="number" id="listenerInput" placeholder="Monthly Listeners" />
-    <input type="file" id="pfpInput" accept="image/*" />
-    <hr />
-    <input type="number" id="streamInput" placeholder="Total Streams" />
-    <input type="text" id="topSongInput" placeholder="Top Song" />
-    <input type="text" id="growthInput" placeholder="Monthly Growth %" />
-    <button onclick="saveChanges()">Save</button>
+    <h1>Edit</h1>
+    <input type="text" id="nameInput" placeholder="Username"/>
+    <input type="number" id="listenerInput" placeholder="Monthly Listeners"/>
+    <input type="file" id="pfpInput" accept="image/*"/>
+
+    <hr/>
+    <h2>Stream Stats</h2>
+    <input type="text" id="topSongInput" placeholder="Top Song"/>
+    <input type="text" id="growthInput" placeholder="Growth %"/>
+    <input type="number" id="streamsInput" placeholder="Total Streams"/>
+
+    <hr/>
+    <h2>Edit Chart Data</h2>
+    <textarea id="chartInput" placeholder="e.g. 400,600,800"></textarea>
+
+    <button onclick="saveAll()">Save Changes</button>
     <a class="edit-link" href="index.html">← Back</a>
   </div>
 
   <script>
-    function saveChanges() {
-      const name = document.getElementById("nameInput").value;
-      const listeners = document.getElementById("listenerInput").value;
-      const streams = document.getElementById("streamInput").value;
-      const topSong = document.getElementById("topSongInput").value;
-      const growth = document.getElementById("growthInput").value;
-      const file = document.getElementById("pfpInput").files[0];
+    document.getElementById("nameInput").value = localStorage.getItem("username") || "";
+    document.getElementById("listenerInput").value = localStorage.getItem("listeners") || "";
+    document.getElementById("topSongInput").value = localStorage.getItem("topSong") || "";
+    document.getElementById("growthInput").value = localStorage.getItem("growth") || "";
+    document.getElementById("streamsInput").value = localStorage.getItem("streams") || "";
+    document.getElementById("chartInput").value = (JSON.parse(localStorage.getItem("chartData")) || []).join(",");
 
-      if (name) localStorage.setItem("username", name);
-      if (listeners) localStorage.setItem("listeners", listeners);
-      if (streams) localStorage.setItem("streams", streams);
-      if (topSong) localStorage.setItem("topSong", topSong);
-      if (growth) localStorage.setItem("growth", growth);
+    function saveAll() {
+      const nv = document.getElementById("nameInput").value;
+      const li = document.getElementById("listenerInput").value;
+      const ts = document.getElementById("topSongInput").value;
+      const gr = document.getElementById("growthInput").value;
+      const st = document.getElementById("streamsInput").value;
+      const chText = document.getElementById("chartInput").value;
 
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          localStorage.setItem("pfp", reader.result);
-          alert("Saved! Go back to see changes.");
-        };
-        reader.readAsDataURL(file);
-      } else {
-        alert("Saved! Go back to see changes.");
+      if(nv) localStorage.setItem("username", nv);
+      if(li) localStorage.setItem("listeners", li);
+      if(ts) localStorage.setItem("topSong", ts);
+      if(gr) localStorage.setItem("growth", gr);
+      if(st) localStorage.setItem("streams", st);
+
+      if(chText) {
+        const arr = chText.split(",").map(n=>parseInt(n.trim())).filter(n=>!isNaN(n));
+        localStorage.setItem("chartData", JSON.stringify(arr));
       }
+      alert("✅ Saved!");
     }
   </script>
 </body>
