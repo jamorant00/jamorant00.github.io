@@ -2,64 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Edit Profile & Stats</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body class="home">
-  <div class="bg-squiggle"></div>
-  <div class="container">
+<body>
+  <div class="dashboard">
     <h1>Edit Profile</h1>
-    <input type="text" id="nameInput" placeholder="Username" />
-    <input type="number" id="listenerInput" placeholder="Monthly Listeners" />
-    <input type="file" id="pfpInput" accept="image/*" />
+    <form class="edit-form">
+      <label for="username-input">Username</label>
+      <input id="username-input" type="text" placeholder="jamorant00" />
 
-    <hr />
-    <h2>Stats for Wrapped</h2>
-    <input type="text" id="topSongInput" placeholder="Top Song" />
-    <input type="text" id="growthInput" placeholder="Growth %" />
-    <input type="number" id="streamsInput" placeholder="Total Streams" />
-
-    <hr />
-    <h2>Chart Data (CSV)</h2>
-    <textarea id="chartInput" placeholder="e.g. 400,600,800"></textarea>
-
-    <button onclick="saveAll()">Save Changes</button>
-    <a class="edit-link" href="index.html">← Back</a>
+      <button type="submit">Save Changes</button>
+    </form>
+    <br />
+    <a href="index.html" class="button">← Back to Dashboard</a>
   </div>
 
   <script>
-    document.getElementById("nameInput").value = localStorage.getItem("username")||"";
-    document.getElementById("listenerInput").value = localStorage.getItem("listeners")||"";
-    document.getElementById("topSongInput").value = localStorage.getItem("topSong")||"";
-    document.getElementById("growthInput").value = localStorage.getItem("growth")||"";
-    document.getElementById("streamsInput").value = localStorage.getItem("streams")||"";
-    document.getElementById("chartInput").value = (JSON.parse(localStorage.getItem("chartData"))||[]).join(",");
+    const input = document.getElementById('username-input');
+    const form = document.querySelector('.edit-form');
 
-    function saveAll(){
-      const nv=document.getElementById("nameInput").value;
-      const li=document.getElementById("listenerInput").value;
-      const ts=document.getElementById("topSongInput").value;
-      const gr=document.getElementById("growthInput").value;
-      const st=document.getElementById("streamsInput").value;
-      const chText=document.getElementById("chartInput").value;
-      const file=document.getElementById("pfpInput").files[0];
+    const saved = localStorage.getItem('username');
+    if (saved) input.value = saved;
 
-      if(nv) localStorage.setItem("username",nv);
-      if(li) localStorage.setItem("listeners",li);
-      if(ts) localStorage.setItem("topSong",ts);
-      if(gr) localStorage.setItem("growth",gr);
-      if(st) localStorage.setItem("streams",st);
-      if(chText){
-        const arr=chText.split(",").map(n=>parseInt(n.trim())).filter(n=>!isNaN(n));
-        localStorage.setItem("chartData",JSON.stringify(arr));
-      }
-      if(file){
-        const reader=new FileReader();
-        reader.onloadend=()=>{localStorage.setItem("pfp",reader.result);alert("Saved!");};
-        reader.readAsDataURL(file);
-      } else alert("Saved!");
-    }
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      localStorage.setItem('username', input.value.trim());
+      alert("Username saved!");
+    });
   </script>
 </body>
 </html>
