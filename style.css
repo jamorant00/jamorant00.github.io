@@ -18,3 +18,12 @@ button{Cursor:pointer;padding:10px;border:none;border-radius:5px;background:#000
 .arrows{display:flex;justify-content:space-between;margin:20px auto;width:100px;}
 
 body.wrapped .edit-link{color:#000;}
+.distrokid {
+  background: rgba(255,255,255,0.1);
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 10px;
+  text-align: left;
+}
+.distrokid h2 { margin-bottom: 10px; }
+.distrokid li { margin-bottom: 6px; font-size: 0.95em; }
