@@ -3,46 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <title>Lor Tinky Wrapped</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="dark wrapped">
-  <div class="wrapped-banner"></div>
+<body class="wrapped">
+  <div class="bg-squiggle"></div>
   <div class="container">
     <div class="slide active" id="slide1">
-      <h1>📊 Total Streams</h1>
-      <p id="wrapStreams">0</p>
+      <h1>📊 Total Streams</h1><p id="wrapStreams">0</p>
     </div>
     <div class="slide" id="slide2">
-      <h1>🔥 Top Song</h1>
-      <p id="wrapTop">Unknown</p>
+      <h1>🔥 Top Song</h1><p id="wrapTop">Unknown</p>
     </div>
     <div class="slide" id="slide3">
-      <h1>📈 Growth</h1>
-      <p id="wrapGrowth">0%</p>
+      <h1>📈 Growth</h1><p id="wrapGrowth">0%</p>
     </div>
-    <button class="next-btn" onclick="nextSlide()">Next ➡️</button>
+    <div class="arrows">
+      <button onclick="prevSlide()">◀️</button>
+      <button onclick="nextSlide()">▶️</button>
+    </div>
     <a class="edit-link" href="index.html">← Home</a>
   </div>
 
   <script>
     const stats = {
-      streams: localStorage.getItem("streams") || "4220",
-      top: localStorage.getItem("topSong") || "Like Tew Mump",
-      growth: localStorage.getItem("growth") || "+54%",
-      pfp: localStorage.getItem("pfp")
+      streams: localStorage.getItem("streams")||"4220",
+      top: localStorage.getItem("topSong")||"Like Tew Mump",
+      growth: localStorage.getItem("growth")||"+54%"
     };
     document.getElementById("wrapStreams").textContent = stats.streams;
     document.getElementById("wrapTop").textContent = stats.top;
     document.getElementById("wrapGrowth").textContent = stats.growth;
 
-    const slides = ["slide1","slide2","slide3"];
-    let idx = 0;
-    function nextSlide(){
-      document.getElementById(slides[idx]).classList.remove("active");
-      idx = (idx+1)%slides.length;
-      document.getElementById(slides[idx]).classList.add("active");
+    const slides = [...document.querySelectorAll(".slide")];
+    let idx=0;
+    function updateSlide(n){
+      slides[idx].classList.remove("active");
+      idx = (n+slides.length)%slides.length;
+      slides[idx].classList.add("active");
     }
+    function nextSlide(){ updateSlide(idx+1); }
+    function prevSlide(){ updateSlide(idx-1); }
   </script>
 </body>
 </html>
