@@ -2,108 +2,82 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lor Tinky Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="manifest" href="manifest.webmanifest" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <meta name="theme-color" content="#f9e000" />
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-  <meta name="theme-color" content="#000000" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
-      font-family: 'Inter', sans-serif;
+      background-color: #f9e000;
+      font-family: 'Roboto', sans-serif;
       margin: 0;
-      background-color: #ffeb3b;
+      padding: 20px;
       color: #000;
     }
-
-    .dashboard {
-      padding: 20px;
-    }
-
-    .profile {
+    header {
       display: flex;
       align-items: center;
       gap: 16px;
     }
-
-    .circle-pfp {
-      width: 80px;
-      height: 80px;
+    .profile-pic {
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       object-fit: cover;
+      border: 3px solid orange;
     }
-
-    .profile-info h1 {
+    .header-info h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 28px;
+      font-weight: 700;
+      color: orange;
     }
-
-    .profile-info p {
-      margin: 4px 0 0;
-      color: #444;
+    .header-info p {
+      max-width: 600px;
+      font-size: 16px;
+      line-height: 1.5;
+      margin-top: 6px;
     }
-
-    .bio {
-      margin: 20px 0;
-      background: #ffa726;
-      padding: 15px;
-      border-radius: 10px;
-      color: #000;
-    }
-
-    .stat-card {
-      background-color: #ffa726;
-      padding: 16px;
-      border-radius: 12px;
-      text-align: center;
-      flex: 1;
-      color: #000;
-    }
-
-    .stats {
-      display: flex;
-      gap: 12px;
-      margin: 20px 0;
-      flex-wrap: wrap;
-    }
-
-    .graph-container {
-      margin: 20px 0;
-      background: #ffa726;
-      padding: 10px;
-      border-radius: 12px;
-    }
-
-    .button {
-      background-color: #000;
-      color: #fff;
-      padding: 12px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 12px;
-    }
-
-    .songs {
-      background: #ffa726;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-
-    .songs ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .songs li {
-      margin-bottom: 8px;
-    }
-
-    footer {
+    section.stats, section.highlights, section.songs {
       margin-top: 30px;
-      text-align: center;
+      background-color: #ffa726;
+      border-radius: 10px;
+      padding: 16px;
+      color: #000;
+      max-width: 700px;
+    }
+    section.stats h2,
+    section.highlights h2,
+    section.songs h2 {
+      margin-top: 0;
+      font-weight: 700;
+      font-size: 22px;
+      color: #000;
+    }
+    section.stats div, section.highlights ul li, section.songs ul li {
+      margin: 6px 0;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    nav.nav-bar {
+      margin-top: 40px;
+      display: flex;
+      gap: 20px;
+    }
+    nav.nav-bar a {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 6px;
+      background: orange;
+      transition: background 0.3s ease;
+    }
+    nav.nav-bar a.active, nav.nav-bar a:hover {
+      background: #ffb74d;
     }
   </style>
   <script>
@@ -113,80 +87,82 @@
   </script>
 </head>
 <body>
-  <div class="dashboard">
-    <div class="profile">
-      <img src="lor_tinky.jpg" alt="Lor Tinky" class="circle-pfp" />
-      <div class="profile-info">
-        <h1>Lor Tinky</h1>
-        <p id="username-display">@jamorant00</p>
-      </div>
+  <header>
+    <img src="lor_tinky.jpg" alt="Lor Tinky" class="profile-pic" />
+    <div class="header-info">
+      <h1 id="username">jamorant00</h1>
+      <p id="bio">
+        Lor Tinky is an experimental hip-hop artist from the underground scene, mixing chaotic beats with offbeat vocals and raw emotion. Known for viral tracks like "Titi Mama Tata" and "Like Tew Mump," his style blends satire with sincerity. His fanbase is growing fast on TikTok and YouTube Shorts, and his DIY aesthetic stands out in the digital rap era.
+      </p>
     </div>
+  </header>
 
-    <div class="bio">
-      <strong>About Lor Tinky:</strong><br />
-      Lor Tinky is a rising underground artist known for his raw, experimental sound and viral track titles. Blending high-energy vocals with unpredictable flows, his music touches on street life, internet culture, and emotional grit. With standout tracks like "Titi Mama Tata" and "Like Tew Mump", he's carving a unique lane in digital rap scenes.
-    </div>
+  <section class="stats">
+    <h2>Stats</h2>
+    <div><strong>Monthly Listeners:</strong> <span id="listeners">24,892</span></div>
+    <div><strong>Followers:</strong> <span id="followers">18,327</span></div>
+    <div><strong>Total Streams:</strong> <span id="streams">429,000</span></div>
+    <div><strong>Average Daily Streams:</strong> <span id="daily">2,145</span></div>
+    <div><strong>Earnings:</strong> $<span id="earnings">923.45</span></div>
+    <div><strong>Income (Monthly):</strong> $<span id="income">214.56</span></div>
+    <div><strong>Top City:</strong> <span id="topCity">Toronto, Canada</span></div>
+    <div><strong>Last 30 Days Revenue:</strong> $<span id="last30">189.60</span></div>
+  </section>
 
-    <div class="stats">
-      <div class="stat-card"><h3>Streams</h3><p>9,872</p></div>
-      <div class="stat-card"><h3>Listeners</h3><p>1,205</p></div>
-      <div class="stat-card"><h3>Earnings</h3><p>$146.27</p></div>
-      <div class="stat-card"><h3>Followers</h3><p>304</p></div>
-    </div>
+  <section class="highlights">
+    <h2>Highlights</h2>
+    <ul>
+      <li><strong>Top Song This Month:</strong> Like Tew Mump</li>
+      <li><strong>Most Viral Region:</strong> Ontario, CA</li>
+      <li><strong>Peak Daily Streams:</strong> 3,412</li>
+      <li><strong>Listener Growth:</strong> +12.3%</li>
+    </ul>
+  </section>
 
-    <div class="graph-container">
-      <canvas id="streamsChart" aria-label="Streams over the last 6 months" role="img"></canvas>
-    </div>
+  <section class="songs">
+    <h2>Song List</h2>
+    <ul>
+      <li><strong>Titi Mama Tata</strong> – 2:45 • 2023 • 174K streams</li>
+      <li><strong>Like Tew Mump</strong> – 2:58 • 2024 • 215K streams</li>
+      <li><strong>Like Tew Mump (Radio Version)</strong> – 3:12 • 2024 • 31K streams</li>
+      <li><strong>Demo Freestyle 1</strong> – 1:43 • 2022 • 8.5K streams</li>
+    </ul>
+  </section>
 
-    <div class="songs">
-      <strong>Latest Tracks</strong>
-      <ul>
-        <li><b>Titi Mama Tata</b> — 2:18 • 2025</li>
-        <li><b>Like Tew Mump</b> — 1:52 • 2025</li>
-        <li><b>Like Tew Mump (Radio Version)</b> — 2:05 • 2025</li>
-      </ul>
-    </div>
-
-    <a href="edit.html" class="button">Edit Profile</a>
-  </div>
-
-  <footer>
-    <a href="wrapped.html" class="button">View Wrapped →</a>
-  </footer>
+  <nav class="nav-bar">
+    <a href="index.html" class="active">Home</a>
+    <a href="wrapped.html">Wrapped</a>
+    <a href="edit.html">Edit</a>
+  </nav>
 
   <script>
-    const username = localStorage.getItem('username');
-    if (username) {
-      document.getElementById('username-display').textContent = '@' + username;
-    }
-
-    const savedPic = localStorage.getItem('profilePic');
-    const profileImg = document.querySelector('.profile img');
-    if (savedPic) {
-      profileImg.src = savedPic;
-    }
-
-    const ctx = document.getElementById('streamsChart').getContext('2d');
-    const streamsChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [{
-          label: 'Streams',
-          data: [4000, 5200, 6800, 5900, 7200, 6500],
-          backgroundColor: '#000000'
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true }
-        },
-        plugins: {
-          legend: { display: false }
+    window.onload = function () {
+      const defaults = {
+        username: 'jamorant00',
+        bio: "Lor Tinky is an experimental hip-hop artist from the underground scene, mixing chaotic beats with offbeat vocals and raw emotion. Known for viral tracks like \"Titi Mama Tata\" and \"Like Tew Mump,\" his style blends satire with sincerity. His fanbase is growing fast on TikTok and YouTube Shorts, and his DIY aesthetic stands out in the digital rap era.",
+        listeners: '24,892',
+        followers: '18,327',
+        streams: '429,000',
+        daily: '2,145',
+        earnings: '923.45',
+        income: '214.56',
+        topCity: 'Toronto, Canada',
+        last30: '189.60'
+      };
+      for (const id in defaults) {
+        const el = document.getElementById(id);
+        if (el) {
+          const saved = localStorage.getItem(id);
+          el.textContent = saved ? saved : defaults[id];
         }
       }
-    });
+
+      const savedPic = localStorage.getItem('profilePic');
+      if (savedPic) {
+        const img = document.querySelector('.profile-pic');
+        if (img) img.src = savedPic;
+      }
+    };
   </script>
 </body>
 </html>
