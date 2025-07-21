@@ -2,48 +2,144 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Lor Tinky Wrapped</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Wrapped page specific styles */
+    body {
+      background: #ffe600 url('https://i.imgur.com/oK5JvYH.png') repeat;
+      background-size: 120px;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #111;
+    }
+
+    .wrapped-container {
+      max-width: 460px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      position: absolute;
+      width: 100%;
+      top: 20px;
+      left: 0;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      opacity: 1;
+      position: relative;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    button {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #555;
+      cursor: default;
+    }
+  </style>
 </head>
-<body class="wrapped">
-  <div class="bg-squiggle"></div>
-  <div class="container">
+<body>
+  <div class="wrapped-container">
     <div class="slide active" id="slide1">
-      <h1>📊 Total Streams</h1><p id="wrapStreams">0</p>
+      <h2>🎉 Lor Tinky's 2025 Wrapped</h2>
+      <p>Total Streams: 88,392</p>
+      <p>Monthly Listeners: 12,942</p>
+      <p>Followers: 3,405</p>
     </div>
     <div class="slide" id="slide2">
-      <h1>🔥 Top Song</h1><p id="wrapTop">Unknown</p>
+      <h2>🔥 Top Track</h2>
+      <p>“Titi Mama Tata” — 25,341 streams</p>
     </div>
     <div class="slide" id="slide3">
-      <h1>📈 Growth</h1><p id="wrapGrowth">0%</p>
+      <h2>🎧 Platforms</h2>
+      <p>Spotify, Apple Music, TikTok, YouTube, and more</p>
     </div>
-    <div class="arrows">
-      <button onclick="prevSlide()">◀️</button>
-      <button onclick="nextSlide()">▶️</button>
+    <div class="slide" id="slide4">
+      <h2>💰 Earnings</h2>
+      <p>Approx. $1,235.45 earned from streams</p>
     </div>
-    <a class="edit-link" href="index.html">← Home</a>
+
+    <div class="controls">
+      <button id="prevBtn" disabled>←</button>
+      <button id="nextBtn">→</button>
+    </div>
   </div>
 
   <script>
-    const stats = {
-      streams: localStorage.getItem("streams")||"4220",
-      top: localStorage.getItem("topSong")||"Like Tew Mump",
-      growth: localStorage.getItem("growth")||"+54%"
-    };
-    document.getElementById("wrapStreams").textContent = stats.streams;
-    document.getElementById("wrapTop").textContent = stats.top;
-    document.getElementById("wrapGrowth").textContent = stats.growth;
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentSlide = 0;
 
-    const slides = [...document.querySelectorAll(".slide")];
-    let idx=0;
-    function updateSlide(n){
-      slides[idx].classList.remove("active");
-      idx = (n+slides.length)%slides.length;
-      slides[idx].classList.add("active");
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === slides.length -1;
     }
-    function nextSlide(){ updateSlide(idx+1); }
-    function prevSlide(){ updateSlide(idx-1); }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentSlide > 0) {
+        currentSlide--;
+        showSlide(currentSlide);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentSlide < slides.length -1) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
+    });
+
+    // Optional: Auto-advance every 8 seconds
+    // setInterval(() => {
+    //   if (currentSlide < slides.length -1) {
+    //     currentSlide++;
+    //   } else {
+    //     currentSlide = 0;
+    //   }
+    //   showSlide(currentSlide);
+    // }, 8000);
   </script>
 </body>
 </html>
