@@ -6,8 +6,8 @@
 }
 
 body {
-  font-family: "Helvetica Neue", sans-serif;
-  background: #ffe600 url('https://i.imgur.com/oK5JvYH.png'); /* squiggles */
+  font-family: "Inter", sans-serif;
+  background: #ffe600 url('https://i.imgur.com/oK5JvYH.png') repeat;
   background-size: 120px;
   color: #111;
   padding: 20px;
@@ -32,7 +32,7 @@ body {
   margin-bottom: 20px;
 }
 
-.profile img {
+.circle-pfp {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -53,7 +53,7 @@ body {
 /* Stat cards */
 .stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 15px;
   margin-bottom: 20px;
 }
@@ -73,18 +73,12 @@ body {
   color: #000;
 }
 
-/* Chart or graph area */
-.graph {
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 14px;
-  text-align: center;
+.graph-container {
   margin-bottom: 20px;
 }
 
-/* Buttons and nav links */
-button,
-a.button {
+/* Buttons */
+.button {
   display: inline-block;
   background: #000;
   color: #fff;
@@ -98,25 +92,21 @@ a.button {
   margin-top: 10px;
 }
 
-button:hover,
-a.button:hover {
+.button:hover {
   background: #222;
 }
 
-/* Footer link */
+/* Footer */
 footer {
   margin-top: 20px;
   text-align: center;
 }
 
-footer a {
-  color: #000;
+footer .button {
   font-weight: bold;
-  text-decoration: underline;
-  font-size: 0.95em;
 }
 
-/* Form for edit.html */
+/* Edit form */
 .edit-form {
   display: flex;
   flex-direction: column;
