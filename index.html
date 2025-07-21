@@ -2,73 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lor Tinky Dashboard</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="stylesheet" href="style.css" />
-  <meta name="theme-color" content="#f7df1e" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#ffeb3b" />
   <script>
-    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
   </script>
 </head>
-<body class="home">
-  <div class="bg-squiggle"></div>
-  <div class="container">
-    <img id="profilePic" class="pfp" src="lor_tinky.jpg" alt="Profile">
-    <h1 id="username">Lor Tinky</h1>
-    <p><span id="listeners">118,931</span> Monthly Listeners</p>
-    <p class="bio">Lor Tinky is an emerging artist with 118K+ monthly listeners, known for tracks like “TiTi MaMa TaTA” and “Like Tew Mump”  [oai_citation:0‡open.spotify.com](https://open.spotify.com/artist/4RAyQ66PVaWoyAvc9rmZIA?utm_source=chatgpt.com).</p>
-<section class="distrokid">
-  <h2>📦 Distributed via DistroKid</h2>
-  <ul>
-    <li>DistroKid is a top-tier digital distributor used by over 2 million artists  [oai_citation:0‡Wikipedia](https://en.wikipedia.org/wiki/DistroKid?utm_source=chatgpt.com) [oai_citation:1‡Wikipedia](https://es.wikipedia.org/wiki/DistroKid?utm_source=chatgpt.com).</li>
-    <li>Founded in 2012 by Philip J. Kaplan; artists keep 100% of earnings  [oai_citation:2‡support.distrokid.com](https://support.distrokid.com/hc/en-us/articles/360013535454-What-is-DistroKid?utm_source=chatgpt.com) [oai_citation:3‡Wikipedia](https://en.wikipedia.org/wiki/DistroKid?utm_source=chatgpt.com).</li>
-    <li>Automatically sends music to Spotify, Apple Music, Amazon, TikTok, Deezer, Tidal, and more  [oai_citation:4‡Wikipedia](https://es.wikipedia.org/wiki/DistroKid?utm_source=chatgpt.com) [oai_citation:5‡support.distrokid.com](https://support.distrokid.com/hc/en-us/articles/360013535454-What-is-DistroKid?utm_source=chatgpt.com).</li>
-    <li>Provides features like HyperFollow landing pages, real-time analytics, royalty splits (via Teams), YouTube Content ID, and more  [oai_citation:6‡support.distrokid.com](https://support.distrokid.com/hc/en-us/articles/4712724929427-DistroKid-Goodies-Beyond-Distribution?utm_source=chatgpt.com) [oai_citation:7‡soundon.global](https://www.soundon.global/forum/distrokid-number-features?lang=en&utm_source=chatgpt.com).</li>
-  </ul>
-</section>
-    <h2>Monthly Streams</h2>
-    <div class="chart">
-      <div id="bars"></div>
-      <input type="number" id="monthInput" placeholder="This month's streams" />
-      <button onclick="addData()">➕</button>
-    </div>
+<body>
+  <div class="dashboard">
+    <header>
+      <img src="lor_tinky.jpg" alt="Lor Tinky" class="profile-img" />
+      <h1>Lor Tinky</h1>
+      <p class="username">@jamorant00</p>
+    </header>
 
-    <div class="nav-links">
-      <a href="edit.html">✏️ Edit Profile & Stats</a>
-      <a href="wrapped.html">📊 Wrapped</a>
-    </div>
+    <section class="stats-card">
+      <h2>📈 Artist Stats</h2>
+      <div class="stats">
+        <div><strong>Monthly Listeners</strong><br>12,942</div>
+        <div><strong>Total Streams</strong><br>88,392</div>
+        <div><strong>Top Song</strong><br>“Titi Mama Tata”</div>
+      </div>
+    </section>
+
+    <section class="chart">
+      <h3>Streams Over Time</h3>
+      <div class="bar-chart">
+        <div style="height: 40%"><span>Jan</span></div>
+        <div style="height: 60%"><span>Feb</span></div>
+        <div style="height: 80%"><span>Mar</span></div>
+        <div style="height: 55%"><span>Apr</span></div>
+        <div style="height: 90%"><span>May</span></div>
+        <div style="height: 75%"><span>Jun</span></div>
+      </div>
+    </section>
+
+    <section class="distro">
+      <h2>📦 Distribution</h2>
+      <p>Uploaded via DistroKid. Earnings tracked, streaming across Spotify, Apple Music, TikTok and more.</p>
+    </section>
+
+    <footer>
+      <a href="edit.html">✏️ Edit Profile</a>
+      <a href="wrapped.html">🎉 Wrapped</a>
+    </footer>
   </div>
-
-  <script>
-    const name = localStorage.getItem("username");
-    const listeners = localStorage.getItem("listeners");
-    const pfp = localStorage.getItem("pfp");
-    if (name) document.getElementById("username").textContent = name;
-    if (listeners) document.getElementById("listeners").textContent = listeners;
-    if (pfp) document.getElementById("profilePic").src = pfp;
-
-    let data = JSON.parse(localStorage.getItem("chartData")) || [400,600,800,700,900];
-    function renderChart() {
-      const bars = document.getElementById("bars");
-      bars.innerHTML = "";
-      const max = Math.max(...data,1);
-      data.forEach(n => {
-        const h = 100 * (n / max);
-        bars.innerHTML += `<div class="bar" style="height:${h}%;" title="${n}"></div>`;
-      });
-    }
-    function addData() {
-      const val = parseInt(document.getElementById("monthInput").value);
-      if (val>0) {
-        data.push(val);
-        if(data.length>12) data.shift();
-        localStorage.setItem("chartData", JSON.stringify(data));
-        renderChart();
-      }
-      document.getElementById("monthInput").value="";
-    }
-    renderChart();
-  </script>
 </body>
 </html>
