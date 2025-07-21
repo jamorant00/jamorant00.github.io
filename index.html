@@ -3,26 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <title>Lor Tinky Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <meta name="theme-color" content="#000" />
   <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#f7df1e" />
   <script>
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
   </script>
 </head>
-<body class="dark">
-  <div class="banner"></div>
+<body class="home">
+  <div class="bg-squiggle"></div>
   <div class="container">
     <img id="profilePic" class="pfp" src="lor_tinky.jpg" alt="Profile">
     <h1 id="username">Lor Tinky</h1>
-    <p><span id="listeners">87,420</span> Monthly Listeners</p>
+    <p><span id="listeners">118,931</span> Monthly Listeners</p>
+    <p class="bio">Lor Tinky is an emerging artist with 118K+ monthly listeners, known for tracks like “TiTi MaMa TaTA” and “Like Tew Mump”  [oai_citation:0‡open.spotify.com](https://open.spotify.com/artist/4RAyQ66PVaWoyAvc9rmZIA?utm_source=chatgpt.com).</p>
 
     <h2>Monthly Streams</h2>
     <div class="chart">
       <div id="bars"></div>
-      <input type="number" id="monthInput" placeholder="Streams this month" />
-      <button onclick="addData()">Add Month</button>
+      <input type="number" id="monthInput" placeholder="This month's streams" />
+      <button onclick="addData()">➕</button>
     </div>
 
     <div class="nav-links">
@@ -32,7 +33,6 @@
   </div>
 
   <script>
-    // load profile
     const name = localStorage.getItem("username");
     const listeners = localStorage.getItem("listeners");
     const pfp = localStorage.getItem("pfp");
@@ -40,12 +40,11 @@
     if (listeners) document.getElementById("listeners").textContent = listeners;
     if (pfp) document.getElementById("profilePic").src = pfp;
 
-    // chart data
     let data = JSON.parse(localStorage.getItem("chartData")) || [400,600,800,700,900];
     function renderChart() {
       const bars = document.getElementById("bars");
       bars.innerHTML = "";
-      const max = Math.max(...data, 1);
+      const max = Math.max(...data,1);
       data.forEach(n => {
         const h = 100 * (n / max);
         bars.innerHTML += `<div class="bar" style="height:${h}%;" title="${n}"></div>`;
@@ -53,13 +52,13 @@
     }
     function addData() {
       const val = parseInt(document.getElementById("monthInput").value);
-      if (val > 0) {
+      if (val>0) {
         data.push(val);
-        if (data.length > 12) data.shift();
+        if(data.length>12) data.shift();
         localStorage.setItem("chartData", JSON.stringify(data));
         renderChart();
       }
-      document.getElementById("monthInput").value = "";
+      document.getElementById("monthInput").value="";
     }
     renderChart();
   </script>
